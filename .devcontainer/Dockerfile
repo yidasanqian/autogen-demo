@@ -3,7 +3,8 @@
 # Licensed under the MIT License. See LICENSE file in the project root for license information.
 #-------------------------------------------------------------------------------------------------------------
 
-FROM mcr.microsoft.com/vscode/devcontainers/python:3.10
+FROM mcr.microsoft.com/vscode/devcontainers/python:3.12
+ARG PIP_OPTIONS="-i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn"
 
 #
 # Update the OS and maybe install packages
@@ -26,7 +27,4 @@ ENV DEBIAN_FRONTEND=dialog
 
 # For docs
 RUN npm install --global yarn
-RUN pip install --upgrade pip
-RUN pip install pydoc-markdown
-RUN pip install pyyaml
-RUN pip install colored
+RUN pip install $PIP_OPTIONS --upgrade pip && pip install $PIP_OPTIONS pydoc-markdown pyyaml colored
