@@ -4,12 +4,16 @@
 #-------------------------------------------------------------------------------------------------------------
 
 FROM mcr.microsoft.com/vscode/devcontainers/python:3.12
-ARG PIP_OPTIONS="-i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn"
+
+ARG NPM_REGISTER="http://registry.npmmirror.com"
+ARG PIP_INDEX="https://pypi.tuna.tsinghua.edu.cn/simple"
 
 #
 # Update the OS and maybe install packages
 #
 ENV DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
 
 # add git lhs to apt
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
@@ -25,6 +29,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* quarto-1.5.23-linux-${arch}.deb
 ENV DEBIAN_FRONTEND=dialog
 
-# For docs
-RUN npm install --global yarn
-RUN pip install $PIP_OPTIONS --upgrade pip && pip install $PIP_OPTIONS pydoc-markdown pyyaml colored
+# 设置时区为中国上海
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN npm config set registry $NPM_REGISTER && npm install --global yarn
+RUN pip config set global.index-url $PIP_INDEX \
+    && pip install --upgrade pip \
+    && pip install pydoc-markdown pyyaml colored
