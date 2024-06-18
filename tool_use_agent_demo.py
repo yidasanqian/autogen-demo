@@ -53,4 +53,4 @@ register_function(
 )
 
 chat_result = user_proxy.initiate_chat(assistant, message="(44232 + 13312 / (232 - 32)) * 5的结果是多少？")
-print(chat_result)
+print(chat_result.summary)

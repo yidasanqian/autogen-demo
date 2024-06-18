@@ -4,7 +4,7 @@ from autogen import AssistantAgent, UserProxyAgent
 llm_config = {
     "config_list": [
   {
-    "model": "gpt-4",
+    "model": "gpt-35-turbo-16k",
     "api_type": "azure",
     "api_key": os.environ['AZURE_OPENAI_API_KEY'],
     "base_url": os.environ['AZURE_OPENAI_BASE_URL'],
