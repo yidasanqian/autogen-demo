@@ -9,7 +9,7 @@ from autogen.coding import DockerCommandLineCodeExecutor
 temp_dir = tempfile.TemporaryDirectory(delete=False)
 print(temp_dir.name)
 code_executor = DockerCommandLineCodeExecutor(
-    image="python:3.12-slim",
+    image="autogen_base_img",
     timeout=60, 
     work_dir=temp_dir.name # 指向本地文件系统目录，docker容器会挂载这个目录，执行器写入代码文件并输出到其中。
     )
@@ -30,7 +30,7 @@ llm_config = {
     "api_type": "azure",
     "api_key": os.environ['AZURE_OPENAI_API_KEY'],
     "base_url": os.environ['AZURE_OPENAI_BASE_URL'],
-    "api_version": "2024-02-15-preview",
+    "api_version": os.environ['AZURE_OPENAI_API_VERSION'],
     "max_tokens": 4096,
     "temperature": 0.5,
   }

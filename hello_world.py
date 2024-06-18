@@ -8,7 +8,7 @@ llm_config = {
     "api_type": "azure",
     "api_key": os.environ['AZURE_OPENAI_API_KEY'],
     "base_url": os.environ['AZURE_OPENAI_BASE_URL'],
-    "api_version": "2024-02-15-preview",
+    "api_version": os.environ['AZURE_OPENAI_API_VERSION'],
     "max_tokens": 4096
   }
 ]
